@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Patients</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form class="m-3 border p-4 rounded shadow" method="post" th:action="@{/admin/save(page=${page},keyword=${keyword})}">
+                    <div class="form-group row p-3">
+                        <label for="id" class="col-sm-4 col-form-label" >ID : </label>
+                        <label for="id" class="col-sm-4 col-form-label" th:text="${patient.id}"></label>
+                        <div class="col-sm-8">
+                            <input type="hidden" class="form-control" id="id"
+                                   name="id" th:value="${patient.id}"  readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="nomid" class="col-sm-4 col-form-label">Nom</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="nomid"
+                                   name="nom" th:value="${patient.nom}" placeholder="Entrez nom">
+                            <span class="text-danger" th:errors="${patient.nom}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="date" class="col-sm-4 col-form-label">Date Naissance</label>
+                        <div class="col-sm-8">
+                            <input type="date" class="form-control" id="date"
+                                   name="dateNaissance" th:value="${patient.dateNaissance}" placeholder="Entrez la date de naissance">
+                            <span class="text-danger" th:errors="${patient.dateNaissance}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="malade" class="col-sm-4 col-form-label">Malade</label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" class="form-check-input" id="malade"
+                                   name="malade" th:checked="${patient.malade}" >
+                            <span class="text-danger" th:errors="${patient.malade}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row p-3">
+                        <label for="score" class="col-sm-4 col-form-label">Le score</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" id="score"
+                                   name="score" th:value="${patient.score}" >
+                            <span class="text-danger" th:errors="${patient.score}"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center p-3">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
