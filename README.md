@@ -154,10 +154,6 @@ Ce contrôleur minimaliste illustre la séparation des responsabilités : Securi
 
 
 
-
-
-
-
 ## Classe Principale `HopitalApplication`:
 La classe HopitalApplication est la classe principale de l'application Spring Boot, marquée par @SpringBootApplication. Elle sert de point de démarrage et configure trois méthodes essentielles annotées @Bean pour : initialiser les données patients, gérer la sécurité des utilisateurs, et encoder les mots de passe. Ces méthodes illustrent différentes approches pour la base de données et sécuriser l'accès aux fonctionnalités.Voici une explication détaillé de ce qu'il contient : 
 1. Méthode start() :
@@ -193,8 +189,14 @@ Ce fichier contient les techniques de configuration de l'application Spring Boot
     - Le mode spring.sql.init.mode=always assure l'exécution des scripts SQL d'initialisation, tandis que spring.jpa.defer-datasource-initialization=true retarde l'initialisation jusqu'à ce que la DataSource soit prête.    
  Pour le développement, le cache Thymeleaf est désactivé (false) pour permettre des modifications en temps réel, et la locale est fixée en français.  
     ![Texte alternatif](properties.JPG)
-
-
+    
+###  Schéma.sql:
+Ce script SQL configure le schéma de base de données nécessaire pour l'authentification via Spring Security en mode JDBC. Trois opérations clés sont réalisées :
+  - Table users crée la table principale des utilisateurs avec : username (clé primaire), password (stocké haché),enabled (statut d'activation du compte).
+  - Table authorities définit les rôles des utilisateurs avec : username (clé étrangère liée à users), authority (rôle comme 'ROLE_ADMIN').
+  - Contrainte : Une clé étrangère (fk_authorities_users) assure l'intégrité référentielle.
+  ![Texte alternatif](scema.JPG)
+ 
     
 - Résultat Attendu
 Au lancement de l’application :
@@ -208,8 +210,8 @@ Il est possible de visualiser les tables et le contenu des enregistrements via l
 en utilisant le JDBC URL suivant :
   - jdbc:h2:mem:hospital
     
-## Problème rencontré: 
-je voulais également vous informer que j’ai rencontré un problème sur mon PC concernant l’utilisation de XAMPP/WampServer. J’ai essayé à plusieurs reprises de le résoudre, mais je n’ai pas encore trouvé de solution définitive. Toutefois, je continue à chercher activement une solution afin de pouvoir avancer sur les prochains projets.
+
+
 
 
  ## - Conclusion
