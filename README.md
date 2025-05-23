@@ -110,15 +110,15 @@ La classe UserDetailServiceImpl implémente l'interface UserDetailsService de Sp
  ![img](userserviceDetail.JPG)
  
  #### - Classe `SecurityConfig`:
-La classe SecurityConfig c'est la classe essentiel pour la configuration Spring Security, elle est marquée par @EnableWebSecurity et @EnableMethodSecurity pour activer la sécurité web et les annotations de contrôle d'accès. Elle propose trois approches d'authentification :
-   - InMemory: Crée des utilisateurs en mémoire avec InMemoryUserDetailsManager,il est utile pour les tests.
-   - JDBC: Permet une authentification via base de données avec JdbcUserDetailsManager.
-   - Personnalisée: Dans cette approche on utilise UserDetailServiceImpl pour charger les utilisateurs depuis notre modèle personnalisé (AppUser).
-La configuration active (securityFilterChain) définit :
-    - Un formulaire de login personnalisé (/login) avec redirection vers /user/index après succès.
-    - Un système "remember-me" avec clé unique et durée de validité (14 jours).
-    - Des règles d'accès : qui permet l'accès aux ressources statiques (/webjars/**). Il exige une authentification pour toutes les autres requêtes (anyRequest().authenticated()).Ainsi , une page d'erreur dédiée (/notAuthorized).
-Cette configuration offre une sécurité flexible, prête pour une montée en charge (en décommentant JDBC) tout en intégrant notre modèle métier via UserDetailServiceImpl.
+La classe SecurityConfig c'est la classe essentiel pour la configuration Spring Security, elle est marquée par @EnableWebSecurity et @EnableMethodSecurity pour activer la sécurité web et les annotations de contrôle d'accès. Elle propose trois approches d'authentification :  
+   - InMemory: Crée des utilisateurs en mémoire avec InMemoryUserDetailsManager,il est utile pour les tests.  
+   - JDBC: Permet une authentification via base de données avec JdbcUserDetailsManager.  
+   - Personnalisée: Dans cette approche on utilise UserDetailServiceImpl pour charger les utilisateurs depuis notre modèle personnalisé (AppUser).  
+La configuration active (securityFilterChain) définit :  
+    - Un formulaire de login personnalisé (/login) avec redirection vers /user/index après succès.  
+    - Un système "remember-me" avec clé unique et durée de validité (14 jours).  
+    - Des règles d'accès : qui permet l'accès aux ressources statiques (/webjars/**). Il exige une authentification pour toutes les autres requêtes (anyRequest().authenticated()).Ainsi , une page d'erreur dédiée (/notAuthorized).  
+Cette configuration offre une sécurité flexible, prête pour une montée en charge (en décommentant JDBC) tout en intégrant notre modèle métier via UserDetailServiceImpl.  
 
 
 ![img](security1.JPG)
@@ -250,10 +250,7 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
 
   ![Texte alternatif](modifi.jpeg)
 
-### Validation du formulaire
-
-  ![Texte alternatif](vide.png)
-  
+ 
   
 ###  Page `Modification`: Aprés la modification
   ![Texte alternatif](aprés.jpeg)
@@ -265,6 +262,11 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   
 ###  Page `Rechérche`: 
   ![Texte alternatif](rechercher.jpeg)
+
+### Validation du formulaire
+
+  ![Texte alternatif](vide.png)
+  
 ###  Page `Ajouter`: 
   ![Texte alternatif](ajout.jpeg)
 ###  Page `Ajouter`: Aprés l'ajout
