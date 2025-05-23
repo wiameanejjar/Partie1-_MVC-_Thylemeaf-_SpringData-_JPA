@@ -1,3 +1,7 @@
+## Nom et Prénom : Anejjar Wiame
+## Filière: MSDIA
+
+---
 # Rapport de TP – Application de Gestion Hospitalière avec Spring Boot, Spring Security et Thymeleaf
 
 ## 📌 Objectif du TP
@@ -205,13 +209,13 @@ Cette page représente la page d'erreur d'accès non autorisé qui s'intègre da
  ![Texte alternatif](erreur.JPG) 
 
 ###  Template `Patients`:
+Ce template Thymeleaf constitue l'interface principale de gestion des patients, structurée en trois parties clés. D'abord, un formulaire de recherche en haut permet de filtrer les patients par mot-clé tout en conservant les paramètres de pagination. Ensuite, un tableau Bootstrap affiche la liste paginée des patients avec leurs informations principales (ID, nom, date de naissance, statut médical et score). Enfin, une barre de pagination en bas permet de naviguer entre les pages de résultats.
+  - Une sécurité fine avec affichage conditionnel des boutons d'administration (suppression/édition) uniquement pour les rôles ADMIN.
+  - Des fonctionnalités telles que : confirmation avant suppression, icônes Bootstrap, mise en évidence de la page active.
+  - La conservation du contexte (mot-clé de recherche et numéro de page) dans toutes les actions.
+
 ###  Template `template1`:
-
-
-
-
-
-
+Ce template définit la barre de navigation principale de l'application (navbar) qui sera héritée par toutes les autres pages, offrant une structure commune avec un menu responsive, des contrôles d'accès conditionnels pour les rôles ADMIN, et les fonctionnalités d'authentification (affichage du nom utilisateur et bouton de déconnexion), tout en réservant une zone (content1) pour le contenu spécifique à chaque page.
 
 
 ## ⚙️ Configuration (`application.properties`):
@@ -229,21 +233,18 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   - Contrainte : Une clé étrangère (fk_authorities_users) assure l'intégrité référentielle.
   ![Texte alternatif](scema.JPG)
  
-    
+  ---  
 ## - Résultats : 
 
 
 
 
-
+---
  ## - Conclusion
-Ce TP m’a permis de mettre en œuvre une application Spring Boot complète de gestion hospitalière, avec intégration de plusieurs entités métier liées entre elles (Patient, Medecin, RendezVous, Consultation).
-Grâce à Spring Data JPA, l’initialisation des données, et la console H2, j’ai pu tester le cycle complet de création, persistance et consultation des enregistrements.
-Il renforce aussi la compréhension des relations entre entités, de l’utilisation des repositories JPA, et de la configuration d’une base de données embarquée pour un développement efficace.
-
-Auteur :  
-Anejjar Wiame
+Ce TP a permis de mettre en pratique Spring Boot, Spring Security et Thymeleaf pour développer une application web sécurisée de gestion des patients. Nous avons implémenté un CRUD complet avec pagination, une authentification basée sur les rôles (USER/ADMIN), et une interface responsive grâce à Bootstrap. L’utilisation de fragments Thymeleaf a favorisé la réutilisabilité du code, tandis que Spring Security a garanti la protection des routes sensibles. Ce projet illustre comment concevoir une application robuste, maintenable et sécurisée avec l’écosystème Spring.
 
 
+
+---
  
   
