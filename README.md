@@ -172,8 +172,26 @@ Cette méthode CommandLineRunner illustre trois approches pour créer et persist
 Dans cette méthode on utilise JdbcUserDetailsManager, elle configure des utilisateurs en base via Spring Security. Contrairement à la méthode précédente, elle opère au niveau infrastructure (sans passer par le service métier) et vérifie l'existence des utilisateurs avant création. Cette approche, bien que fonctionnelle, est moins flexible que l'utilisation d'AccountService car elle dépend du schéma de tables prédéfini par Spring Security. 
   ![Texte alternatif](bean3.JPG) 
 
+##  Package templates:
+###  Template `editPatients`:
+Ce template Thymeleaf utilise une architecture modulaire en héritant du layout principal template1 via layout:decorate, tout en injectant son contenu spécifique dans la section content1 (balise div layout:fragment). Le formulaire est conçu pour créer/modifier des patients avec :
+    - Champs du Formulaire :
+        - ID : Champ caché (pour les modifications) affiché en lecture seule.
+        - Nom : Champ texte avec validation côté serveur (th:errors).
+        - Date de Naissance : Input de type date avec format standard
+        - Statut Malade : Checkbox booléen.
+        - Score : Input numérique avec validation.
+    - Fonctionnalités: Dans ce formulaire on conserve le contexte (pagination/recherche) via paramètres dans l'action (/admin/save?page=${page}&keyword=${keyword}), ainsi on affiche dynamiquement des erreurs de validation Jakarta EE (th:errors) en rouge .Binding automatique avec l'objet Patient du modèle (th:value, th:checked).
+    - Sécurité: Pour la sécurité on a utilsé action POST pour protéger par Spring Security (route /admin/save) , aussi la protection CSRF  implicite (activée par défaut avec Thymeleaf et Spring Security)
+ ![Texte alternatif](edit1.JPG) 
+ ![Texte alternatif](edit2.JPG) 
+  ![Texte alternatif](edit3.JPG) 
 
-
+###  Template `formPatients`:
+###  Template `login`:
+###  Template `notAuthorized`:
+###  Template `Patients`:
+###  Template `template1`:
 
 
 
@@ -190,7 +208,7 @@ Ce fichier contient les techniques de configuration de l'application Spring Boot
  Pour le développement, le cache Thymeleaf est désactivé (false) pour permettre des modifications en temps réel, et la locale est fixée en français.  
     ![Texte alternatif](properties.JPG)
     
-###  Schéma.sql:
+###  - Schéma.sql:
 Ce script SQL configure le schéma de base de données nécessaire pour l'authentification via Spring Security en mode JDBC. Trois opérations clés sont réalisées :
   - Table users crée la table principale des utilisateurs avec : username (clé primaire), password (stocké haché),enabled (statut d'activation du compte).
   - Table authorities définit les rôles des utilisateurs avec : username (clé étrangère liée à users), authority (rôle comme 'ROLE_ADMIN').
@@ -198,18 +216,8 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   ![Texte alternatif](scema.JPG)
  
     
-- Résultat Attendu
-Au lancement de l’application :
-     - Plusieurs patients (Mohamed, Hassan, Wiame) et médecins (aymane, Hanane, yasmine) sont créés automatiquement avec des données simulées.
-     - Des rendez-vous sont générés entre certains patients et médecins avec un statut initial PENDING.
-     - Une consultation est enregistrée pour le premier rendez-vous, avec un rapport médical.
-     - Toutes les entités (Patient, Medecin, RendezVous, Consultation) sont persistées automatiquement en base H2.
+## - Résultats : 
 
-Il est possible de visualiser les tables et le contenu des enregistrements via la console H2, accessible à l’adresse :
- -  http://localhost:8086/h2-console  
-en utilisant le JDBC URL suivant :
-  - jdbc:h2:mem:hospital
-    
 
 
 
