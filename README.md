@@ -249,6 +249,11 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
 ###  Page `Modification`:
 
   ![Texte alternatif](modifi.jpeg)
+
+### Validation du formulaire
+
+  ![Texte alternatif](vide.png)
+  
   
 ###  Page `Modification`: Aprés la modification
   ![Texte alternatif](aprés.jpeg)
@@ -264,7 +269,11 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   ![Texte alternatif](ajout.jpeg)
 ###  Page `Ajouter`: Aprés l'ajout
   ![Texte alternatif](apresajout.jpeg)
+  
+###  Création de la table
 
+  ![Texte alternatif](bd.png)
+  
   
 ---
  ## - Conclusion
