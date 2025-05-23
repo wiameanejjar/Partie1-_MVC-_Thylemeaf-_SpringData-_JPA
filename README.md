@@ -194,12 +194,16 @@ La soumission s'effectue vers l'endpoint '/admin/save' en méthode POST, protég
  ![Texte alternatif](form2.JPG) 
  ![Texte alternatif](form3.JPG) 
 ###  Template `login`:
-Cette template est la page d'authentification de l'application, conçue avec Bootstrap 5 pour une interface moderne. Le formulaire de login est structuré dans une carte centrée (card) avec trois champs principaux : un champ texte pour le nom d'utilisateur (username), un champ password pour le mot de passe, et une case à cocher "Remember Me" permettant la persistance de la session. Le formulaire utilise la méthode POST et cible l'endpoint "/login" de Spring Security, qui gère nativement le processus d'authentification. Le bouton de soumission, stylisé en vert. Ce template illustre les bonnes pratiques d'un formulaire de connexion sécurisé tout en offrant une expérience utilisateur optimale.
+Cette template est la page d'authentification de l'application, conçue avec Bootstrap 5 pour une interface moderne. Le formulaire de login est structuré dans une carte centrée (card) avec trois champs principaux : un champ texte pour le nom d'utilisateur (username), un champ password pour le mot de passe, et une case à cocher "Remember Me" permettant la persistance de la session. Le formulaire utilise la méthode POST et cible l'endpoint "/login" de Spring Security, qui gère nativement le processus d'authentification. Le bouton de soumission, stylisé en vert. Cette template illustre les bonnes pratiques d'un formulaire de connexion sécurisé tout en offrant une expérience utilisateur optimale.
  ![Texte alternatif](login1.JPG) 
  ![Texte alternatif](login2.JPG) 
 
 
 ###  Template `notAuthorized`:
+Cette page représente la page d'erreur d'accès non autorisé qui s'intègre dans le layout principal 'template1' via le système de fragments.La directive layout:fragment="content1" définit une section remplaçable dans le template, permettant d'injecter du contenu spécifique à cette page tout en conservant la structure commune du layout principal (template1).
+
+ ![Texte alternatif](erreur.JPG) 
+
 ###  Template `Patients`:
 ###  Template `template1`:
 
