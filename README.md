@@ -187,12 +187,15 @@ Dans cette méthode on utilise JdbcUserDetailsManager, elle configure des utilis
 
 
 ## ⚙️ Configuration (`application.properties`):
-Ce fichier contient les paramètres essentiels de configuration de l’application Spring Boot, en particulier pour la gestion du port d'accès, la base de données et la console H2. Voici une explication détaillée des principales propriétés utilisées :
-  - spring.application.name=Hospital : définit le nom de l’application Spring Boot comme “Hospital”.
-  - spring.datasource.url=jdbc:h2:mem:hospital : configure la connexion à une base de données H2 en mémoire, nommée ici "hospital".
-  - spring.h2.console.enabled=true : active la console web H2, accessible dans le navigateur à l’adresse http://localhost:8086/h2-console. Cette interface permet de visualiser et d’interroger la base de données H2 pendant l'exécution.
-  - server.port=8086 : spécifie que l'application sera accessible sur le port 8086 (au lieu de la valeur par défaut 8080). Cela peut être utile pour éviter les conflits de port avec d'autres services.
-    ![Texte alternatif](h2.JPG)
+Ce fichier contient les techniques de configuration de l'application Spring Boot avec des paramètres critiques.     
+    - Le port d'exécution est défini sur 8084 (server.port), tandis que la connexion à une base de données MySQL/MariaDB locale est établie via l'URL jdbc:mysql://localhost:3306/hospital, avec auto-création de la base si inexistante.    
+    - La configuration JPA/Hibernate (spring.jpa.hibernate.ddl-auto=update) permet une mise à jour automatique du schéma de base de données, et le dialecte MariaDB est explicitement spécifié pour optimiser les requêtes SQL.    
+    - Le mode spring.sql.init.mode=always assure l'exécution des scripts SQL d'initialisation, tandis que spring.jpa.defer-datasource-initialization=true retarde l'initialisation jusqu'à ce que la DataSource soit prête.    
+ Pour le développement, le cache Thymeleaf est désactivé (false) pour permettre des modifications en temps réel, et la locale est fixée en français.  
+    ![Texte alternatif](properties.JPG)
+
+
+    
 - Résultat Attendu
 Au lancement de l’application :
      - Plusieurs patients (Mohamed, Hassan, Wiame) et médecins (aymane, Hanane, yasmine) sont créés automatiquement avec des données simulées.
