@@ -142,6 +142,26 @@ Les endpoints /patients (en JSON via @ResponseBody) et /formPatients illustrent 
 ![Texte alternatif](CONTROLE2.JPG)
 ![Texte alternatif](CONTROLE3.JPG) 
 
+
+###  - Classe `SecurityController`:
+Ce contrôleur Spring MVC, annoté @Controller, gère exclusivement les vues liées à la sécurité de l'application. Il expose deux endpoints simples mais essentiels :
+     - /notAuthorized : Affiche la page notAuthorized.html (via le retour de chaîne) lorsqu'un utilisateur tente d'accéder à une ressource sans les permissions requises. Cette redirection est typiquement configurée dans SecurityConfig via exceptionHandling().accessDeniedPage().
+     - /login : Renvoie la vue login.html contenant le formulaire d'authentification. Ce endpoint est généralement référencé dans la configuration Spring Security (formLogin().loginPage("/login")) pour personnaliser le processus de connexion.
+
+Ce contrôleur minimaliste illustre la séparation des responsabilités : SecurityConfig gère la logique de sécurité, tandis que SecurityController fournit les vues associées.
+
+![Texte alternatif](controle1.JPG) 
+![Texte alternatif](CONTROLE2.JPG)
+
+
+
+
+
+
+
+
+
+
 ## Classe Principale `HospitalApplication`:
 La classe HospitalApplication constitue le point d’entrée de l’application Spring Boot de gestion hospitalière. Annotée avec @SpringBootApplication, elle active la configuration automatique de Spring ainsi que le scan des composants, ce qui permet de démarrer l'application de manière autonome.  
 
