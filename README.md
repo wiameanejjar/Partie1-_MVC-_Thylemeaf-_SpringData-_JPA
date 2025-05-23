@@ -159,21 +159,22 @@ Ce contrôleur minimaliste illustre la séparation des responsabilités : Securi
 
 
 ## Classe Principale `HopitalApplication`:
-La classe HopitalApplication est la classe principale de l'application Spring Boot, marquée par @SpringBootApplication. Elle sert de point de démarrage et configure trois méthodes essentielles annotées @Bean pour : initialiser les données patients, gérer la sécurité des utilisateurs, et encoder les mots de passe. Ces méthodes illustrent différentes approches pour peupler la base de données et sécuriser l'accès aux fonctionnalités.Voici une explication détaillé de ce qu'il contient : 
+La classe HopitalApplication est la classe principale de l'application Spring Boot, marquée par @SpringBootApplication. Elle sert de point de démarrage et configure trois méthodes essentielles annotées @Bean pour : initialiser les données patients, gérer la sécurité des utilisateurs, et encoder les mots de passe. Ces méthodes illustrent différentes approches pour la base de données et sécuriser l'accès aux fonctionnalités.Voici une explication détaillé de ce qu'il contient : 
 1. Méthode start() :
 Cette méthode CommandLineRunner illustre trois approches pour créer et persister des entités Patient au démarrage de l'application.  
    - Approche impérative classique : On instancie un Patient via le constructeur par défaut et on définit chaque propriété via des setters (setNom(), setScore(), etc.).
    - Approche par constructeur paramétré : Utilisation directe d'un constructeur avec tous les arguments.
    - Pattern Builder (Lombok) : On utilise Patient.builder() qui permet une construction chaînée et lisible, idéale pour les objets complexes. Les propriétés sont définies via des méthodes claires (nom("Anejjar"), score(56)), et build() valide l'objet.
-      ![Texte alternatif](host1.JPG) 
+      ![Texte alternatif](Bean1.JPG)
+      ![Texte alternatif](suiteBean1.JPG) 
 
 2. Méthode commandLineRunnerUserDetails() :
    Cette méthode illustre l'initialisation des données de sécurité via le service métier AccountService. Elle crée deux rôles ("USER" et "ADMIN") et trois utilisateurs, dont un administrateur cumulant les deux rôles. Chaque utilisateur est enregistré avec son mot de passe haché (grâce au PasswordEncoder), démontrant comment peupler la base avec des données cohérentes pour les tests. Elle sert de référence pour une initialisation métier (via AppUser/AppRole) plutôt que directe en base.
    - La méthode passwordEncoder() est annotée @Bean configure et expose un encodeur de mots de passe BCrypt, essentiel pour la sécurité de l'application. En utilisant BCryptPasswordEncoder, elle garantit que tous les mots de passe sont stockés sous forme hachée (avec salage automatique), protégeant ainsi contre les attaques par force brute. Ce composant est ensuite injecté dans AccountService pour sécuriser la création des utilisateurs.
-  ![Texte alternatif](host1.JPG) 
+  ![Texte alternatif](bean2.JPG) 
 3. Méthode commandLineRunner() (JdbcUserDetailsManager) :
 Dans cette méthode on utilise JdbcUserDetailsManager, elle configure des utilisateurs en base via Spring Security. Contrairement à la méthode précédente, elle opère au niveau infrastructure (sans passer par le service métier) et vérifie l'existence des utilisateurs avant création. Cette approche, bien que fonctionnelle, est moins flexible que l'utilisation d'AccountService car elle dépend du schéma de tables prédéfini par Spring Security. 
-  ![Texte alternatif](host1.JPG) 
+  ![Texte alternatif](bean3.JPG) 
 
 
 
