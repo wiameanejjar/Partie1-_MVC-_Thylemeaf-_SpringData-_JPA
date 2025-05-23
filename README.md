@@ -174,20 +174,25 @@ Dans cette méthode on utilise JdbcUserDetailsManager, elle configure des utilis
 
 ##  Package templates:
 ###  Template `editPatients`:
-Ce template Thymeleaf utilise une architecture modulaire en héritant du layout principal template1 via layout:decorate, tout en injectant son contenu spécifique dans la section content1 (balise div layout:fragment). Le formulaire est conçu pour créer/modifier des patients avec :
-    - Champs du Formulaire :
-        - ID : Champ caché (pour les modifications) affiché en lecture seule.
-        - Nom : Champ texte avec validation côté serveur (th:errors).
-        - Date de Naissance : Input de type date avec format standard
-        - Statut Malade : Checkbox booléen.
-        - Score : Input numérique avec validation.
-    - Fonctionnalités: Dans ce formulaire on conserve le contexte (pagination/recherche) via paramètres dans l'action (/admin/save?page=${page}&keyword=${keyword}), ainsi on affiche dynamiquement des erreurs de validation Jakarta EE (th:errors) en rouge .Binding automatique avec l'objet Patient du modèle (th:value, th:checked).
-    - Sécurité: Pour la sécurité on a utilsé action POST pour protéger par Spring Security (route /admin/save) , aussi la protection CSRF  implicite (activée par défaut avec Thymeleaf et Spring Security)
+Ce template Thymeleaf utilise une architecture modulaire en héritant du layout principal template1 via layout:decorate, tout en injectant son contenu spécifique dans la section content1 (balise div layout:fragment). Le formulaire est conçu pour créer/modifier des patients avec :  
+    - Champs du Formulaire :  
+        - ID : Champ caché (pour les modifications) affiché en lecture seule.  
+        - Nom : Champ texte avec validation côté serveur (th:errors).  
+        - Date de Naissance : Input de type date avec format standard  
+        - Statut Malade : Checkbox booléen.  
+        - Score : Input numérique avec validation.  
+    - Fonctionnalités: Dans ce formulaire on conserve le contexte (pagination/recherche) via paramètres dans l'action (/admin/save?page=${page}&keyword=${keyword}), ainsi on affiche dynamiquement des erreurs de validation Jakarta EE (th:errors) en rouge .Binding automatique avec l'objet Patient du modèle (th:value, th:checked).  
+    - Sécurité: Pour la sécurité on a utilsé action POST pour protéger par Spring Security (route /admin/save) , aussi la protection CSRF  implicite (activée par défaut avec Thymeleaf et Spring Security).  
  ![Texte alternatif](edit1.JPG) 
  ![Texte alternatif](edit2.JPG) 
   ![Texte alternatif](edit3.JPG) 
 
 ###  Template `formPatients`:
+Dans cette template Thymeleaf on crée un formulaire de gestion des patients qui s'intègre dans le layout principal 'template1' via le système de fragments. Le formulaire implémente plusieurs fonctionnalités clés : il pré-remplit dynamiquement les champs grâce aux expressions Thymeleaf (th:value, th:checked) en se basant sur l'objet Patient transmis par le contrôleur, tout en affichant les éventuels messages d'erreur de validation (th:errors) sous chaque champ.  
+La soumission s'effectue vers l'endpoint '/admin/save' en méthode POST, protégé par Spring Security. Les différents champs capturent les informations essentielles d'un patient : nom (avec placeholder), date de naissance (via un sélecteur de date natif), statut médical (case à cocher) et score (entier numérique). Enfin ,le bouton de soumission stylisé en vert.  
+ ![Texte alternatif](form1.JPG) 
+ ![Texte alternatif](form2.JPG) 
+ ![Texte alternatif](form3.JPG) 
 ###  Template `login`:
 ###  Template `notAuthorized`:
 ###  Template `Patients`:
