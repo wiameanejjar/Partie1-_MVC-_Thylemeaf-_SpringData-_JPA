@@ -48,43 +48,33 @@ Le projet suit une architecture MVC (Modèle-Vue-Contrôleur) typique d'une appl
  ---
 ## 📄 Explication détaillée 
 ---
- ## 🗂 Entities
-### 1. Classe Patient :
+ ## 🗂 Package entities
+### - Classe Patient :
 La classe Patient est une entité JPA qui modélise un patient dans le système hospitalier. Annotée avec @Entity, elle est mappée à une table en base de données c'est à dire que cette classe représente une table dans la base de données, où chaque instance de Patient correspondra à une ligne dans cette table. L'annotation @Id marque le champ id comme clé primaire, tandis que @GeneratedValue(strategy = GenerationType.IDENTITY) permet sa génération automatique. Les contraintes de validation (@NotEmpty, @Size, @DecimalMin) assurent l'intégrité des données c'est à dire que le nom doit être non vide et compris entre 4 et 40 caractères, et le score minimal est fixé à 100.Ainsi, on a utilisé l'annotation @Temporal(TemporalType.DATE) pour préciser que le champ dateNaissance stocke uniquement la date (sans l'heure), et @DateTimeFormat(pattern = "yyyy-MM-dd") standardise son format, ainsi l'attribut malade c'est pour de type boolean pour spécifier l'état de chaque patient.  
 Les annotations Lombok (@Data, @NoArgsConstructor, @AllArgsConstructor, @Builder) génèrent automatiquement les getters/setters, constructeurs et un builder. Cette classe sert de fondation pour la persistance et la validation des données patients dans l'application.
 
   ![img](classPatients.JPG)
 
- ## 🗂️ Repositories
+ ## 🗂️ Package repositories
 ### - Interface `PatientRepository` : 
 L'interface PatientRepository étend JpaRepository, ce qui lui permet d'hériter automatiquement des opérations CRUD de base sans implémentation manuelle, car Spring Data JPA fournit ces fonctionnalités prêtes à l'emploi. Elle inclut deux méthodes de recherche : findByNomContains, une méthode dérivée où Spring génère automatiquement la requête à partir du nom de la méthode, et chercher c'une méthode personnalisée utilisant l'annotation @Query pour spécifier une requête explicite. Les deux méthodes retournent un objet Page contenant les résultats paginés. Les deux méthodes acceptent un paramètre Pageable pour gérer la pagination et le tri.   
 L'annotation @Param lie le paramètre keyword à la variable x dans la requête JPQL, pour garantir une liaison sécurisée des paramètres et éviter les injections SQL. Ainsi, ce repository combine à la fois la simplicité des requêtes générées automatiquement et la flexibilité des requêtes personnalisées pour répondre aux besoins spécifiques de l'application.
  ![img](patientRepo.JPG)
 
-## 🛠️ Services
-### -  Interface `IHospitalService`:
-L’interface IHospitalService définit les opérations métier principales liées à la gestion des entités médicales telles que les patients, les médecins, les rendez-vous et les consultations. Elle joue un rôle essentiel dans l’architecture de l’application en assurant une séparation claire entre la couche contrôleur (qui traite les requêtes HTTP) et la couche de persistance (repositories).  
-Cette interface facilite l’évolutivité, la maintenance et les tests unitaires du système en fournissant une abstraction des traitements métiers.
- - Voici les méthodes déclarées dans l’interface IHospitalService :
-    - savePatient(Patient patient) : enregistre un nouveau patient dans la base de données.
-    - saveMedecin(Medecin medecin) : ajoute un médecin au système.
-    - saveRDV(RendezVous rendezVous) : crée un rendez-vous médical. Un identifiant unique est généré automatiquement.
-    - saveConsultation(Consultation consultation) : enregistre une consultation médicale.
+## 🛠️ Package security
+### 1.  Package `entities`:
+#### - Classe `AppRole`:
+La classe AppRole est une entité JPA qui modélise un rôle de sécurité dans l'application. Elle est mappée à une table en base de données en utilisant l'annotation @Entity, tandis que @Id désigne le champ role comme clé primaire. Les annotations Lombok (@Data, @NoArgsConstructor, @AllArgsConstructor, @Builder) génèrent automatiquement les getters/setters, les constructeurs et un builder pour simplifier le code.  
+Cette classe permet de gérer les différents rôles (comme "ADMIN" ou "USER") qui seront utilisés pour sécuriser l'accès aux fonctionnalités de l'application via Spring Security. Sa simplicité et son intégration avec JPA en font un composant essentiel pour la gestion des autorisations.
 
-Cette interface pose les fondations de la logique métier, laissant l’implémentation concrète aux classes de service.
- ![img](ihospitalservice.JPG)
- ### -  Implémentation `HospitalServiceImpl`:
-La classe HospitalServiceImpl est l’implémentation concrète de l’interface IHospitalService. Annotée avec @Service, elle est détectée automatiquement par le framework Spring comme un composant métier injectable. L’annotation @Transactional garantit que chaque opération métier est exécutée dans une transaction cohérente, ce qui protège l’intégrité des données même en cas d’erreur.  
-Les dépendances nécessaires (PatientRepository, MedecinRepository, RendezVousRepository, ConsultationRepository) sont injectées via un constructeur, pratique rendue possible par Spring, évitant ainsi l’usage direct de @Autowired.
- - Voici les principales méthodes de cette classe :
-     - savePatient(Patient patient) : délègue l'enregistrement d’un patient au PatientRepository.
-     - saveMedecin(Medecin medecin) : enregistre un nouveau médecin via le MedecinRepository.
-     - saveRDV(RendezVous rendezVous) : génère un identifiant aléatoire (UUID) pour chaque rendez-vous avant de l’enregistrer.
-     - saveConsultation(Consultation consultation) : persiste une nouvelle consultation médicale dans la base de données.
+ ![img](approle.JPG)
+ 
+#### - Classe `AppUser`:
+Cette classe représente un utilisateur du système et est conçue pour fonctionner avec Spring Security, car elle stocke les informations d'authentification comme le username et le password, ainsi que les rôles associés via une relation ManyToMany avec AppRole. Le champ username est marqué comme unique (@Column(unique = true)), ce qui empêche les doublons en base de données, tandis que la stratégie de chargement FetchType.EAGER garantit que les rôles sont chargés immédiatement avec l'utilisateur, puisque cela est essentiel pour les vérifications d'autorisation.  
+L'utilisation de Lombok évite le code redondant, et l'annotation @Builder facilite la création d'objets complexes. Cette entité à pour rôle de lier les identifiants de connexion aux permissions accordées via les rôles.
 
-HospitalServiceImpl centralise ainsi toute la logique métier liée à la gestion des entités médicales, tout en s’appuyant sur les repositories pour la persistance. Elle constitue un exemple typique de couche service dans une application Spring Boot bien structurée.
- ![img](impl1.JPG)
- ![img](impl2.JPG)
+ ![img](appuser.JPG)
+
 ## 🌐 Web:
 ###  - Classe `PatientRestController`:
 La classe PatientRestController est un contrôleur REST qui expose les données relatives aux patients via des endpoints HTTP. Grâce à l’annotation @RestController, Spring reconnaît automatiquement cette classe comme un composant dédié à la gestion des requêtes web.  
