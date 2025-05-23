@@ -138,7 +138,9 @@ Les méthodes sécurisées par @PreAuthorize("hasRole('ROLE_ADMIN')") (comme del
 Les endpoints /patients (en JSON via @ResponseBody) et /formPatients illustrent la double capacité à servir du JSON pour des APIs et des vues HTML. La redirection depuis / vers /user/index garantit une entrée utilisateur cohérente.
 
 
-![Texte alternatif](web.JPG) 
+![Texte alternatif](controle1.JPG) 
+![Texte alternatif](CONTROLE2.JPG)
+![Texte alternatif](CONTROLE3.JPG) 
 
 ## Classe Principale `HospitalApplication`:
 La classe HospitalApplication constitue le point d’entrée de l’application Spring Boot de gestion hospitalière. Annotée avec @SpringBootApplication, elle active la configuration automatique de Spring ainsi que le scan des composants, ce qui permet de démarrer l'application de manière autonome.  
