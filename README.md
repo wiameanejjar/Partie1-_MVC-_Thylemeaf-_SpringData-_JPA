@@ -41,7 +41,9 @@ Le projet suit une architecture MVC (Modèle-Vue-Contrôleur) typique d'une appl
      - notAuthorized.html : Message d'erreur pour les accès non autorisés.
   - application.properties : Paramètres de l'application (BDD, sécurité, etc.).
   - schema.sql : Script SQL pour initialiser la structure de la base de données.
-  ![img](hospital.JPG)  
+  
+  ![img](structure1.JPG)  
+  ![img](structure2.JPG)  
   
 ## 📄 Explication détaillée des Classes
 ### 1. Classe Patient :
