@@ -158,20 +158,32 @@ Ce contrôleur minimaliste illustre la séparation des responsabilités : Securi
 
 
 
-## Classe Principale `HospitalApplication`:
-La classe HospitalApplication constitue le point d’entrée de l’application Spring Boot de gestion hospitalière. Annotée avec @SpringBootApplication, elle active la configuration automatique de Spring ainsi que le scan des composants, ce qui permet de démarrer l'application de manière autonome.  
+## Classe Principale `HopitalApplication`:
+La classe HopitalApplication est la classe principale de l'application Spring Boot, marquée par @SpringBootApplication. Elle sert de point de démarrage et configure trois méthodes essentielles annotées @Bean pour : initialiser les données patients, gérer la sécurité des utilisateurs, et encoder les mots de passe. Ces méthodes illustrent différentes approches pour peupler la base de données et sécuriser l'accès aux fonctionnalités.Voici une explication détaillé de ce qu'il contient : 
+1. Méthode start() :
+Cette méthode CommandLineRunner illustre trois approches pour créer et persister des entités Patient au démarrage de l'application.  
+   - Approche impérative classique : On instancie un Patient via le constructeur par défaut et on définit chaque propriété via des setters (setNom(), setScore(), etc.).
+   - Approche par constructeur paramétré : Utilisation directe d'un constructeur avec tous les arguments.
+   - Pattern Builder (Lombok) : On utilise Patient.builder() qui permet une construction chaînée et lisible, idéale pour les objets complexes. Les propriétés sont définies via des méthodes claires (nom("Anejjar"), score(56)), et build() valide l'objet.
+      ![Texte alternatif](host1.JPG) 
 
-La méthode main() utilise SpringApplication.run() pour lancer l’application. Une méthode start() annotée avec @Bean retourne un CommandLineRunner, permettant d’exécuter automatiquement un ensemble d’instructions à l’initialisation de l’application.  
- - Voici ce que cette méthode réalise étape par étape :
-    - Création de plusieurs patients à l’aide de la méthode savePatient() du service métier IHospitalService. Les données sont générées dynamiquement à partir d’une liste de prénoms.
-    - Création de plusieurs médecins, chacun avec un nom, un e-mail, et une spécialité (aléatoirement "Cardio" ou "Dentiste"), via la méthode saveMedecin().
-    - Récupération d’un patient et d’un médecin existants à partir de la base (par id ou nom) pour leur affecter un rendez-vous.
-    - Création et enregistrement d’un rendez-vous (RendezVous) entre le patient et le médecin, avec un statut PENDING et une date courante.
-    - Enfin, création d’une consultation (Consultation) liée au rendez-vous précédemment enregistré, avec un rapport médical fictif.
-
-Ce bloc d’initialisation est très utile pour simuler un scénario clinique complet dès le lancement, ce qui facilite le test, la démonstration, et la validation fonctionnelle de l'application.
+2. Méthode commandLineRunnerUserDetails() :
+   Cette méthode illustre l'initialisation des données de sécurité via le service métier AccountService. Elle crée deux rôles ("USER" et "ADMIN") et trois utilisateurs, dont un administrateur cumulant les deux rôles. Chaque utilisateur est enregistré avec son mot de passe haché (grâce au PasswordEncoder), démontrant comment peupler la base avec des données cohérentes pour les tests. Elle sert de référence pour une initialisation métier (via AppUser/AppRole) plutôt que directe en base.
+   - La méthode passwordEncoder() est annotée @Bean configure et expose un encodeur de mots de passe BCrypt, essentiel pour la sécurité de l'application. En utilisant BCryptPasswordEncoder, elle garantit que tous les mots de passe sont stockés sous forme hachée (avec salage automatique), protégeant ainsi contre les attaques par force brute. Ce composant est ensuite injecté dans AccountService pour sécuriser la création des utilisateurs.
   ![Texte alternatif](host1.JPG) 
-  ![Texte alternatif](host2.JPG) 
+3. Méthode commandLineRunner() (JdbcUserDetailsManager) :
+Dans cette méthode on utilise JdbcUserDetailsManager, elle configure des utilisateurs en base via Spring Security. Contrairement à la méthode précédente, elle opère au niveau infrastructure (sans passer par le service métier) et vérifie l'existence des utilisateurs avant création. Cette approche, bien que fonctionnelle, est moins flexible que l'utilisation d'AccountService car elle dépend du schéma de tables prédéfini par Spring Security. 
+  ![Texte alternatif](host1.JPG) 
+
+
+
+
+
+
+
+
+
+
 
 ## ⚙️ Configuration (`application.properties`):
 Ce fichier contient les paramètres essentiels de configuration de l’application Spring Boot, en particulier pour la gestion du port d'accès, la base de données et la console H2. Voici une explication détaillée des principales propriétés utilisées :
