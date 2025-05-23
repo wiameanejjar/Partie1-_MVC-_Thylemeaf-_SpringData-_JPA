@@ -75,16 +75,16 @@ L'utilisation de Lombok évite le code redondant, et l'annotation @Builder facil
 
  ![img](appuser.JPG)
 
- ### 1.  Package `entities`:
+ ### 2.  Package `repo`:
 #### - Interface `AppRoleRepository`:
 L'interface AppRoleRepository étend JpaRepository, ce qui lui permet d'hériter automatiquement des opérations CRUD standards (Create, Read, Update, Delete) sans nécessiter d'implémentation manuelle, car Spring Data JPA fournit ces fonctionnalités prêtes à l'emploi. Spécialisée pour l'entité AppRole avec une clé primaire de type String, cette interface simplifie la gestion des rôles en base de données, tandis que son intégration native avec Spring Security facilite les vérifications d'autorisation. 
 
- ![img](approle.JPG)
+ ![img](repoapprole.JPG)
  
 #### - Interface `AppUserRepository`:
-Cette interface AppUserRepository étend aussi de JpaRepository, pour bénéficier des opérations CRUD de base pour la gestion des utilisateurs, mais elle ajoute également une méthode personnalisée findByUsername() pour rechercher un utilisateur par son identifiant. Cette méthode est automatiquement implémentée par Spring Data JPA grâce à la convention de nommage, évitant ainsi d'écrire du code supplémentaire. 
+Cette interface étend aussi de JpaRepository, pour bénéficier des opérations CRUD de base pour la gestion des utilisateurs, mais elle ajoute également une méthode personnalisée findByUsername() pour rechercher un utilisateur par son identifiant. Cette méthode est automatiquement implémentée par Spring Data JPA grâce à la convention de nommage, évitant ainsi d'écrire du code supplémentaire. 
 
- ![img](appuser.JPG)
+ ![img](repoappuser.JPG)
 
 ## 🌐 Web:
 ###  - Classe `PatientRestController`:
