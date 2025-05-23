@@ -259,7 +259,7 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   ![Texte alternatif](apresSupp.jpeg)
   
 ###  Page `Rechérche`: 
-  ![Texte alternatif](recherche.jpeg)
+  ![Texte alternatif](rechercher.jpeg)
 ###  Page `Ajouter`: 
   ![Texte alternatif](ajout.jpeg)
 ###  Page `Ajouter`: Aprés l'ajout
