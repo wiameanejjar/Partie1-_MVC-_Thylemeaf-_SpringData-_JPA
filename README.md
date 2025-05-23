@@ -117,8 +117,8 @@ La configuration active (securityFilterChain) définit :
 Cette configuration offre une sécurité flexible, prête pour une montée en charge (en décommentant JDBC) tout en intégrant notre modèle métier via UserDetailServiceImpl.
 
 
-![img](userserviceDetail.JPG)
-![img](userserviceDetail.JPG)
+![img](security1.JPG)
+![img](security2.JPG)
 
 
 
