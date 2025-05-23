@@ -44,66 +44,23 @@ Le projet suit une architecture MVC (Modèle-Vue-Contrôleur) typique d'une appl
   
   ![img](structure1.JPG)  
   ![img](structure2.JPG)  
-  
+
+ ---
 ## 📄 Explication détaillée 
+---
+ ## 🗂 Entities
 ### 1. Classe Patient :
-La classe Patient est une entité JPA qui modélise un patient dans le système hospitalier. Annotée avec @Entity, elle est mappée à une table en base de données. L'annotation @Id marque le champ id comme clé primaire, tandis que @GeneratedValue(strategy = GenerationType.IDENTITY) permet sa génération automatique. Les contraintes de validation (@NotEmpty, @Size, @DecimalMin) assurent l'intégrité des données c'est à dire que le nom doit être non vide et compris entre 4 et 40 caractères, et le score minimal est fixé à 100.Ainsi, on a utilisé l'annotation @Temporal(TemporalType.DATE) pour préciser que le champ dateNaissance stocke uniquement la date (sans l'heure), et @DateTimeFormat(pattern = "yyyy-MM-dd") standardise son format.  
+La classe Patient est une entité JPA qui modélise un patient dans le système hospitalier. Annotée avec @Entity, elle est mappée à une table en base de données c'est à dire que cette classe représente une table dans la base de données, où chaque instance de Patient correspondra à une ligne dans cette table. L'annotation @Id marque le champ id comme clé primaire, tandis que @GeneratedValue(strategy = GenerationType.IDENTITY) permet sa génération automatique. Les contraintes de validation (@NotEmpty, @Size, @DecimalMin) assurent l'intégrité des données c'est à dire que le nom doit être non vide et compris entre 4 et 40 caractères, et le score minimal est fixé à 100.Ainsi, on a utilisé l'annotation @Temporal(TemporalType.DATE) pour préciser que le champ dateNaissance stocke uniquement la date (sans l'heure), et @DateTimeFormat(pattern = "yyyy-MM-dd") standardise son format, ainsi l'attribut malade c'est pour de type boolean pour spécifier l'état de chaque patient.  
 Les annotations Lombok (@Data, @NoArgsConstructor, @AllArgsConstructor, @Builder) génèrent automatiquement les getters/setters, constructeurs et un builder. Cette classe sert de fondation pour la persistance et la validation des données patients dans l'application.
 
   ![img](classPatients.JPG)
-### 2. Classe Medecin :
-La classe Medecin est également une entité JPA représentant les médecins dans le système. Elle utilise les mêmes annotations Lombok que les autres entités pour générer du code standard.
- - Attributs principaux :
-    - id : identifiant unique généré automatiquement.
-    - nom, email, specialite : informations personnelles du médecin.
-    - rendezVous : liste des rendez-vous du médecin avec une relation @OneToMany(mappedBy = "medecin"). Annotée avec @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) pour empêcher son affichage lors des sérialisations JSON, évitant ainsi les cycles infinis et protégeant la structure de données.
-
-  ![img](medecin.JPG)
-### 3. Classe RendezVous :
-Cette classe modélise les rendez-vous entre les patients et les médecins. Elle est reliée à plusieurs entités par des relations @ManyToOne et @OneToOne.
- - Attributs principaux :
-   - id : identifiant du rendez-vous (type String).
-   - date : date du rendez-vous.
-   - status : statut du rendez-vous défini par une énumération StatusRDV, persisté sous forme de chaîne (@Enumerated(EnumType.STRING)).
-   - patient : relation @ManyToOne avec Patient, annotée avec @JsonProperty(WRITE_ONLY) pour éviter la récursivité lors de la sérialisation.
-   - medecin : relation @ManyToOne avec Medecin.
-   - consultation : relation @OneToOne(mappedBy = "rendezVous"), indiquant qu’un rendez-vous peut être associé à une seule consultation.
-
-  ![img](rendezVous.JPG)
-### 4. Classe Consultation :
-La classe Consultation représente les consultations médicales ayant lieu suite à un rendez-vous.
- - Attributs principaux :
-    - id : identifiant généré automatiquement.
-    - dateConsulation : date à laquelle la consultation a eu lieu.
-    - rapport : rapport écrit du médecin suite à la consultation.
-    - rendezVous : relation @OneToOne avec l’entité RendezVous, indiquant l’unicité du lien entre une consultation et son rendez-vous. L’annotation @JsonProperty(WRITE_ONLY) permet d’éviter que la consultation ne soit exposée avec toutes les informations du rendez-vous en JSON.
-
-  ![img](consultation.JPG)
-### 5. Enumération StatusRDV :
-Cette énumération représente les différents statuts possibles d’un rendez-vous :
-   - PENDING : en attente.
-   - CANCELLED : annulé.
-   - DONE : terminé.
-
-Elle est utilisée dans l’entité RendezVous pour gérer l’état d’un rendez-vous via l’annotation @Enumerated(EnumType.STRING), ce qui permet de stocker le nom du statut (et non sa position) dans la base de données.
-
-  ![img](statusRDV.JPG)
 
  ## 🗂️ Repositories
-### - Interface `ConsultationRepository` : 
-L’interface ConsultationRepository est une interface de persistance dédiée à l’entité Consultation. Elle hérite de JpaRepository<Consultation, Long>, ce qui lui permet d’accéder automatiquement à un ensemble complet de méthodes CRUD (Create, Read, Update, Delete) sans avoir à écrire du code supplémentaire. Le type Consultation représente l’entité gérée, tandis que Long est le type de sa clé primaire (id).  
-Grâce à Spring Data JPA, cette interface est détectée automatiquement et injectée dans les services via l’injection de dépendances.
- ![img](consultationrepository.JPG)
-### - Interface `MedecinRepository` :  
-L’interface MedecinRepository est conçue pour interagir avec la base de données à travers l’entité Medecin. Elle étend JpaRepository<Medecin, Long>, ce qui lui donne accès à toutes les opérations CRUD standards. Elle introduit également une méthode personnalisée findByNom(String nom) permettant de rechercher un médecin en fonction de son nom.  
-Spring Data JPA se base sur le nom de la méthode pour générer automatiquement son implémentation, évitant ainsi d’écrire une requête SQL manuelle.
- ![img](medecinrepository.JPG)
- ### - Interface `PatientRepository` : 
-L’interface PatientRepository assure l’accès aux données de l’entité Patient en héritant de JpaRepository<Patient, Long>. Comme les autres interfaces, elle bénéficie des méthodes de base pour la manipulation des entités en base de données. Elle déclare aussi une méthode personnalisée findByNom(String name) permettant de récupérer un patient à partir de son nom. Cette méthode est automatiquement interprétée par Spring pour générer une requête correspondante.
- ![img](patientrepository.JPG)
- ### - Interface `RendezVousRepository` : 
-RendezVousRepository est une interface de gestion de la persistance des entités RendezVous. Elle hérite de JpaRepository<RendezVous, String>, ce qui signifie que l’identifiant principal de l’entité est une String. Elle permet d'effectuer facilement toutes les opérations de base sur les rendez-vous sans devoir implémenter les requêtes manuellement.
- ![img](RDVrepository.JPG)
+### - Interface `PatientRepository` : 
+L'interface PatientRepository étend JpaRepository, ce qui lui permet d'hériter automatiquement des opérations CRUD de base sans implémentation manuelle, car Spring Data JPA fournit ces fonctionnalités prêtes à l'emploi. Elle inclut deux méthodes de recherche : findByNomContains, une méthode dérivée où Spring génère automatiquement la requête à partir du nom de la méthode, et chercher c'une méthode personnalisée utilisant l'annotation @Query pour spécifier une requête explicite. Les deux méthodes retournent un objet Page contenant les résultats paginés. Les deux méthodes acceptent un paramètre Pageable pour gérer la pagination et le tri.   
+L'annotation @Param lie le paramètre keyword à la variable x dans la requête JPQL, pour garantir une liaison sécurisée des paramètres et éviter les injections SQL. Ainsi, ce repository combine à la fois la simplicité des requêtes générées automatiquement et la flexibilité des requêtes personnalisées pour répondre aux besoins spécifiques de l'application.
+ ![img](patientRepo.JPG)
+
 ## 🛠️ Services
 ### -  Interface `IHospitalService`:
 L’interface IHospitalService définit les opérations métier principales liées à la gestion des entités médicales telles que les patients, les médecins, les rendez-vous et les consultations. Elle joue un rôle essentiel dans l’architecture de l’application en assurant une séparation claire entre la couche contrôleur (qui traite les requêtes HTTP) et la couche de persistance (repositories).  
