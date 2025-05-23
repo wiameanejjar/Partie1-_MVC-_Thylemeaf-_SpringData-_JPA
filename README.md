@@ -240,10 +240,14 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   ![Texte alternatif](loginadmin.JPG)
 ###  Page `Acceuil`: lorsque l'admin qui se connecte 
   ![Texte alternatif](admin.JPG)
-###  Page `Acceuil`: lorsque User1 qui se connecte
-  ![Texte alternatif](acceuiluser.JPG)
-###  Page `Modification`: 
-  ![Texte alternatif](modifi.JPG)
+###  Page `Acceuil`: lorsque User1 qui se 
+
+  ![Texte alternatif](acceuiluser.jpeg)
+  
+###  Page `Modification`:
+
+  ![Texte alternatif](modifi.jpeg)
+  
 ###  Page `Modification`: Aprés la modification
   ![Texte alternatif](aprés.jpeg)
   
