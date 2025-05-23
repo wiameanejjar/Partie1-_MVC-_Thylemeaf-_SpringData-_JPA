@@ -125,15 +125,15 @@ Cette configuration offre une sécurité flexible, prête pour une montée en ch
 
 ## 🌐 Package Web:
 ###  - Classe `PatientController`:
-Ce contrôleur Spring MVC gère toutes les opérations liées aux patients en suivant une architecture RESTful et sécurisée. La méthode principale index() implémente une pagination intelligente avec recherche via patientRepository.findByNomContains(), où les paramètres page, size et keyword permettent une navigation fluide dans les résultats. Les données paginées sont transmises au modèle Thymeleaf avec :
-       - La liste des patients (pagePatients.getContent()).  
-       - Le tableau des pages disponibles (totalPages).  
-       - La page courante et le mot-clé de recherche pour conserver le contexte.  
-Les méthodes sécurisées par @PreAuthorize("hasRole('ROLE_ADMIN')") (comme delete(), formPatient(), save() et editPatient()) montrent une gestion fine des permissions :
-      - La suppression (delete) conserve les paramètres de pagination dans la redirection, Il reçoit l'ID du patient et le contexte (page/keyword) via @RequestParam, puis supprime le patient via patientRepository.deleteById(id) ensuite, il redirige vers la liste en conservant la pagination/recherche (redirect:/user/index?page=...).  
-      - Le formulaire d'édition (editPatient) pré-remplit les champs avec les données existantes et récupère le patient existant via patientRepository.findById(id), il transmet au modèle le patient à éditer et le contexte (page/keyword) pour la redirection ensuite il affiche editPatients.html pré-rempli.  
-      - La méthode formPatient() : Prépare un nouveau patient vide (new Patient()) et transmet l'objet au modèle pour le formulaire Thymeleaf ensuite il affiche la vue formPatients.html.  
-      - Méthode save() : on a utilisé @Valid pour vérifier les contraintes de l'entité (@Size, @DecimalMin, etc.) et BindingResult capture les erreurs de validation.    
+Ce contrôleur Spring MVC gère toutes les opérations liées aux patients en suivant une architecture RESTful et sécurisée. La méthode principale index() implémente une pagination intelligente avec recherche via patientRepository.findByNomContains(), où les paramètres page, size et keyword permettent une navigation fluide dans les résultats. Les données paginées sont transmises au modèle Thymeleaf avec :  
+       - La liste des patients (pagePatients.getContent()).    
+       - Le tableau des pages disponibles (totalPages).    
+       - La page courante et le mot-clé de recherche pour conserver le contexte.    
+Les méthodes sécurisées par @PreAuthorize("hasRole('ROLE_ADMIN')") (comme delete(), formPatient(), save() et editPatient()) montrent une gestion fine des permissions :  
+      - La suppression (delete) conserve les paramètres de pagination dans la redirection, Il reçoit l'ID du patient et le contexte (page/keyword) via @RequestParam, puis supprime le patient via patientRepository.deleteById(id) ensuite, il redirige vers la liste en conservant la pagination/recherche (redirect:/user/index?page=...).    
+      - Le formulaire d'édition (editPatient) pré-remplit les champs avec les données existantes et récupère le patient existant via patientRepository.findById(id), il transmet au modèle le patient à éditer et le contexte (page/keyword) pour la redirection ensuite il affiche editPatients.html pré-rempli.    
+      - La méthode formPatient() : Prépare un nouveau patient vide (new Patient()) et transmet l'objet au modèle pour le formulaire Thymeleaf ensuite il affiche la vue formPatients.html.    
+      - Méthode save() : on a utilisé @Valid pour vérifier les contraintes de l'entité (@Size, @DecimalMin, etc.) et BindingResult capture les erreurs de validation.      
 
 Les endpoints /patients (en JSON via @ResponseBody) et /formPatients illustrent la double capacité à servir du JSON pour des APIs et des vues HTML. La redirection depuis / vers /user/index garantit une entrée utilisateur cohérente.
 
