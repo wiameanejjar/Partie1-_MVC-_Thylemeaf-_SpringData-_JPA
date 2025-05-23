@@ -45,17 +45,12 @@ Le projet suit une architecture MVC (Modèle-Vue-Contrôleur) typique d'une appl
   ![img](structure1.JPG)  
   ![img](structure2.JPG)  
   
-## 📄 Explication détaillée des Classes
+## 📄 Explication détaillée 
 ### 1. Classe Patient :
-La classe Patient représente une entité JPA correspondant à la table des patients dans la base de données. Elle est annotée avec @Entity, ce qui indique à JPA qu’il s’agit d’une entité persistante. L’utilisation de Lombok avec @Data, @NoArgsConstructor, et @AllArgsConstructor permet de générer automatiquement les méthodes usuelles (getters, setters, constructeurs, etc.).
- - Attributs principaux :
-   - id : clé primaire de type Long, générée automatiquement (@GeneratedValue).
-   - nom : nom du patient (type String).
-   - dateNaissance : date de naissance annotée avec @Temporal(TemporalType.DATE) pour indiquer qu’il s’agit d’un champ de type date sans l’heure.
-   - malade : booléen indiquant si le patient est actuellement malade.
-   - rendezVous : collection de rendez-vous associés au patient, avec une relation @OneToMany. Le champ mappedBy = "patient" signifie que la relation est gérée par l'entité RendezVous, et fetch = FetchType.LAZY optimise la performance en chargeant la collection uniquement sur demande.
+La classe Patient est une entité JPA qui modélise un patient dans le système hospitalier. Annotée avec @Entity, elle est mappée à une table en base de données. L'annotation @Id marque le champ id comme clé primaire, tandis que @GeneratedValue(strategy = GenerationType.IDENTITY) permet sa génération automatique. Les contraintes de validation (@NotEmpty, @Size, @DecimalMin) assurent l'intégrité des données c'est à dire que le nom doit être non vide et compris entre 4 et 40 caractères, et le score minimal est fixé à 100.Ainsi, on a utilisé l'annotation @Temporal(TemporalType.DATE) pour préciser que le champ dateNaissance stocke uniquement la date (sans l'heure), et @DateTimeFormat(pattern = "yyyy-MM-dd") standardise son format.  
+Les annotations Lombok (@Data, @NoArgsConstructor, @AllArgsConstructor, @Builder) génèrent automatiquement les getters/setters, constructeurs et un builder. Cette classe sert de fondation pour la persistance et la validation des données patients dans l'application.
 
-  ![img](patient.JPG)
+  ![img](classPatients.JPG)
 ### 2. Classe Medecin :
 La classe Medecin est également une entité JPA représentant les médecins dans le système. Elle utilise les mêmes annotations Lombok que les autres entités pour générer du code standard.
  - Attributs principaux :
