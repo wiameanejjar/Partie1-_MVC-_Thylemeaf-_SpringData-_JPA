@@ -26,7 +26,8 @@ Le projet suit une architecture MVC (Modèle-Vue-Contrôleur) typique d'une appl
    Il contient les packages:
     - Entités qui contient les classes AppRole pour définir les rôles d'accès et AppUser pour modéliser un utilisateur avec ses credentials et rôles associés.
     - Répo qui contient les interfaces AppRoleRepository / AppUserRepository pour persister et rechercher rôles/utilisateurs en base.
-    - Service qui contient la classe SecurityConfig pour configurer les règles d'accès et l'authentification (ex: routes protégées).
+    - Service qui contient l'interface AccountService qui définit les contrats pour la gestion des utilisateurs et rôles, l'implémentation AccountServiceImpl qui implémente les règles métier (validation des mots de passe, gestion des transactions avec @Transactional), ainsi l'implémentation UserDetailServiceImpl pour adapter le modèle AppUser à Spring Security en implémentant UserDetailsService pour l'authentification.
+    - La classe SecurityConfig pour configurer les règles d'accès et l'authentification (ex: routes protégées).
  - web : Contient les contrôleurs MVC :
      - Classe PatientController: Gère l'affichage et la recherche des patients.
      - Classe SecurityController: Gère les vues liées à l'authentification.
@@ -38,7 +39,8 @@ Le projet suit une architecture MVC (Modèle-Vue-Contrôleur) typique d'une appl
      - editPatients.html : Vue spécifique pour modifier un patient existant.
      - login.html : Page d'authentification avec formulaire de connexion.
      - notAuthorized.html : Message d'erreur pour les accès non autorisés.
-
+  - application.properties : Paramètres de l'application (BDD, sécurité, etc.).
+  - schema.sql : Script SQL pour initialiser la structure de la base de données.
   ![img](hospital.JPG)  
   
 ## 📄 Explication détaillée des Classes
