@@ -102,8 +102,26 @@ La méthode loadUserByUsername récupère un utilisateur par son username via ap
 
  #### - Implémentation `UserDetailServiceImpl`:
 La classe UserDetailServiceImpl implémente l'interface UserDetailsService de Spring Security, servant de pont entre notre modèle d'utilisateur personnalisé (AppUser) et le système d'authentification de Spring. Elle injecte AccountService via Lombok (@AllArgsConstructor) pour accéder aux données utilisateurs. la méthode loadUserByUsername récupère un AppUser via accountService.loadUserByUsername(), si l'utilisateur n'existe pas une exception UsernameNotFoundException est affichée. Ensuite, elle transforme les rôles (entités AppRole) en tableau de Strings via un stream Java puis construit un objet UserDetails (standard Spring Security) avec le username et mot de passe haché. Ainsi, les rôles sont formé au tableau via la méthode roles().
+
  ![img](userserviceDetail.JPG)
+ 
  #### - Classe `SecurityConfig`:
+La classe SecurityConfig c'est la classe essentiel pour la configuration Spring Security, elle est marquée par @EnableWebSecurity et @EnableMethodSecurity pour activer la sécurité web et les annotations de contrôle d'accès. Elle propose trois approches d'authentification :
+   - InMemory: Crée des utilisateurs en mémoire avec InMemoryUserDetailsManager,il est utile pour les tests.
+   - JDBC: Permet une authentification via base de données avec JdbcUserDetailsManager.
+   - Personnalisée: Dans cette approche on utilise UserDetailServiceImpl pour charger les utilisateurs depuis notre modèle personnalisé (AppUser).
+La configuration active (securityFilterChain) définit :
+    - Un formulaire de login personnalisé (/login) avec redirection vers /user/index après succès.
+    - Un système "remember-me" avec clé unique et durée de validité (14 jours).
+    - Des règles d'accès : qui permet l'accès aux ressources statiques (/webjars/**). Il exige une authentification pour toutes les autres requêtes (anyRequest().authenticated()).Ainsi , une page d'erreur dédiée (/notAuthorized).
+Cette configuration offre une sécurité flexible, prête pour une montée en charge (en décommentant JDBC) tout en intégrant notre modèle métier via UserDetailServiceImpl.
+
+
+![img](userserviceDetail.JPG)
+![img](userserviceDetail.JPG)
+
+
+
 
 
 
