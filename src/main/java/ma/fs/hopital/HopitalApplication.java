@@ -2,6 +2,7 @@ package ma.fs.hopital;
 
 import ma.fs.hopital.entities.Patient;
 import ma.fs.hopital.repository.PatientRepository;
+import ma.fs.hopital.security.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,23 +26,23 @@ public class HopitalApplication  {
 	//@Bean
 	CommandLineRunner start(PatientRepository patientRepository) {
 		return args -> {
-			// trois façons pour insérer des patients
+			// Il existe trois méthodes pour insérer des patients
 			// 1 ere méthode
 			Patient patient = new Patient();
 			patient.setId(null);
-			patient.setNom("user");
+			patient.setNom("Wiame");
 			patient.setDateNaissance(new Date());
 			patient.setMalade(false);
 			patient.setScore(23);
 			//patientRepository.save(patient);
 
 			// 2 eme méthode
-			Patient patient2 = new Patient(null,"utilisateur",new Date(),false, 123);
+			Patient patient2 = new Patient(null,"Anejjar Wiame",new Date(),false, 123);
 			//patientRepository.save(patient2);
 
 			// 3 eme méthode : en utilisant builder
 			Patient patient3= Patient.builder()
-					.nom("user")
+					.nom("Anejjar")
 					.dateNaissance(new Date())
 					.score(56)
 					.malade(true)
@@ -56,13 +57,30 @@ public class HopitalApplication  {
 			});
 		};
 	}
+	//@Bean
+	CommandLineRunner commandLineRunnerUserDetails(AccountService accountService) {
+		return args -> {
+			accountService.addNewRole("USER");
+			accountService.addNewRole("ADMIN");
+			accountService.addNewUser("user1","1234","user1@gmail.com","1234");
+			accountService.addNewUser("user2","1234","user1@gmail.com","1234");
+			accountService.addNewUser("admin","1234","admin@gmail.com","1234");
+
+			accountService.addRoleToUser("user1","USER");
+			accountService.addRoleToUser("user2","USER");
+			accountService.addRoleToUser("admin","USER");
+			accountService.addRoleToUser("admin","ADMIN");
+
+		};
+
+	}
 
 	@Bean
 	PasswordEncoder passwordEncder(){
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
+	//@Bean
 	CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
 		PasswordEncoder passwordEncoder = passwordEncder();
 		return args ->{

@@ -38,7 +38,7 @@ public class PatientController {
         model.addAttribute("Listpatients", pagePatients.getContent());
         // stocker le nombre de pages
         model.addAttribute("pages",new int[pagePatients.getTotalPages()]);
-        // stocker la page courante pour la colorier
+        // stocker la page courante
         model.addAttribute("currentPage",page);
         // stocker la valeur de keyword pour l 'affichier après
         model.addAttribute("keyword",kw);

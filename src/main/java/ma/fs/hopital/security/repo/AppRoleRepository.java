@@ -1,4 +1,8 @@
 package ma.fs.hopital.security.repo;
 
-public interface AppRoleRepository {
+import ma.fs.hopital.security.entities.AppRole;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AppRoleRepository extends JpaRepository<AppRole, String> {
+
 }

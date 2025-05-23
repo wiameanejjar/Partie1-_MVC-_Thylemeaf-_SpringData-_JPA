@@ -1,5 +1,8 @@
 package ma.fs.hopital.security;
 
+import lombok.AllArgsConstructor;
+import ma.fs.hopital.security.service.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -15,11 +18,14 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)// Il faut proteger les les endpoints moi meme au niveau de controleur
+@AllArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)// Il faut proteger les endpoints moi meme au niveau de controleur
 public class SecurityConfig {
 
+    private UserDetailServiceImpl userDetailServiceImpl;
 
-    // définir les utilisateurs qui ont le droit d 'accéder à l'application
+
+    // ceci est pour définir les utilisateurs qui ont le droit d 'accéder à l'application
     //@Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder passwordEncoder){
         String encodedPassword = passwordEncoder.encode("1234");
@@ -31,9 +37,9 @@ public class SecurityConfig {
         );
     }
     //JDBC authentication
-    @Bean
+    //@Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource){
-        // on spécifie le data source, où on a les rôles et les tables
+        //ici on spécifie le data source, où on a les rôles et les tables
         return new JdbcUserDetailsManager(dataSource);
     }
     @Bean // Exécuter au démarrage
@@ -55,7 +61,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .exceptionHandling(exception ->{
                     exception.accessDeniedPage("/notAuthorized");
-                })
+                }).userDetailsService(userDetailServiceImpl)
                 .build();
     }
 }
