@@ -236,9 +236,30 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
   ---  
 ## - Résultats : 
 
+###  Page `Login`:
+  ![Texte alternatif](loginadmin.JPG)
+###  Page `Acceuil`: lorsque l'admin qui se connecte 
+  ![Texte alternatif](admin.JPG)
+###  Page `Acceuil`: lorsque User1 qui se connecte
+  ![Texte alternatif](acceuiluser.JPG)
+###  Page `Modification`: 
+  ![Texte alternatif](modifi.JPG)
+###  Page `Modification`: Aprés la modification
+  ![Texte alternatif](aprés.jpeg)
+  
+###  Page `Suppression`: 
+  ![Texte alternatif](suppression.jpeg)
+###  Page `Suppréssion`: Aprés la suppréssion
+  ![Texte alternatif](apresSupp.jpeg)
+  
+###  Page `Rechérche`: 
+  ![Texte alternatif](recherche.jpeg)
+###  Page `Ajouter`: 
+  ![Texte alternatif](ajout.jpeg)
+###  Page `Ajouter`: Aprés l'ajout
+  ![Texte alternatif](apresajout.jpeg)
 
-
-
+  
 ---
  ## - Conclusion
 Ce TP a permis de mettre en pratique Spring Boot, Spring Security et Thymeleaf pour développer une application web sécurisée de gestion des patients. Nous avons implémenté un CRUD complet avec pagination, une authentification basée sur les rôles (USER/ADMIN), et une interface responsive grâce à Bootstrap. L’utilisation de fragments Thymeleaf a favorisé la réutilisabilité du code, tandis que Spring Security a garanti la protection des routes sensibles. Ce projet illustre comment concevoir une application robuste, maintenable et sécurisée avec l’écosystème Spring.
