@@ -253,7 +253,7 @@ Ce script SQL configure le schéma de base de données nécessaire pour l'authen
 ###  Page `Modification`: Aprés la modification
   ![Texte alternatif](aprés.jpeg)
   
-###  Page `Suppression`: 
+###  Page `Suppression`: Je supprime Mohammed avec id=7
   ![Texte alternatif](suppression.jpeg)
 ###  Page `Suppréssion`: Aprés la suppréssion
   ![Texte alternatif](apresSupp.jpeg)
