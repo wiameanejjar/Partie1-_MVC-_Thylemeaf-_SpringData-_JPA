@@ -194,6 +194,11 @@ La soumission s'effectue vers l'endpoint '/admin/save' en méthode POST, protég
  ![Texte alternatif](form2.JPG) 
  ![Texte alternatif](form3.JPG) 
 ###  Template `login`:
+Cette template est la page d'authentification de l'application, conçue avec Bootstrap 5 pour une interface moderne. Le formulaire de login est structuré dans une carte centrée (card) avec trois champs principaux : un champ texte pour le nom d'utilisateur (username), un champ password pour le mot de passe, et une case à cocher "Remember Me" permettant la persistance de la session. Le formulaire utilise la méthode POST et cible l'endpoint "/login" de Spring Security, qui gère nativement le processus d'authentification. Le bouton de soumission, stylisé en vert. Ce template illustre les bonnes pratiques d'un formulaire de connexion sécurisé tout en offrant une expérience utilisateur optimale.
+ ![Texte alternatif](login1.JPG) 
+ ![Texte alternatif](login2.JPG) 
+
+
 ###  Template `notAuthorized`:
 ###  Template `Patients`:
 ###  Template `template1`:
